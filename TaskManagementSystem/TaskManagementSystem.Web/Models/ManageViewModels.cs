@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNet.Identity;
-using Microsoft.Owin.Security;
-
-namespace TaskManagementSystem.Web.Models
+﻿namespace TaskManagementSystem.Web.Models
 {
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.Owin.Security;
+
     public class IndexViewModel
     {
         public bool HasPassword { get; set; }
