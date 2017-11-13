@@ -74,7 +74,7 @@ namespace TaskManagementSystem.Data.Migrations
 
             TaskProject secondTask = new TaskProject
             {
-                CreatedDate = DateTime.Now.AddDays(1),
+                CreatedDate = DateTime.Now.AddDays(-2),
                 RequiredByDate = DateTime.Now.AddMonths(2),
                 Description = "Develop new subject entry screen.",
                 Status = TaskStatus.Assigned,
@@ -89,7 +89,7 @@ namespace TaskManagementSystem.Data.Migrations
 
             TaskProject thirdTask = new TaskProject
             {
-                CreatedDate = DateTime.Now.AddDays(2),
+                CreatedDate = DateTime.Now.AddDays(-3),
                 RequiredByDate = DateTime.Now.AddDays(40),
                 Description = "Prepare the contract.",
                 Status = TaskStatus.Assigned,
@@ -101,6 +101,66 @@ namespace TaskManagementSystem.Data.Migrations
                 NextActionDate = DateTime.Now.AddMonths(1)
             };
             context.Tasks.Add(thirdTask);
+
+            TaskProject fourthTask = new TaskProject
+            {
+                CreatedDate = DateTime.Now.AddDays(-4),
+                RequiredByDate = DateTime.Now.AddDays(40),
+                Description = "Prepare the other contract.",
+                Status = TaskStatus.Assigned,
+                Type = TaskType.Banking,
+                Users = new List<User>
+                {
+                    michaelJohnson
+                },
+                NextActionDate = DateTime.Now.AddMonths(1)
+            };
+            context.Tasks.Add(fourthTask);
+
+            TaskProject fifthdTask = new TaskProject
+            {
+                CreatedDate = DateTime.Now.AddDays(-5),
+                RequiredByDate = DateTime.Now.AddDays(40),
+                Description = "Create edition object insert method.",
+                Status = TaskStatus.Assigned,
+                Type = TaskType.Development,
+                Users = new List<User>
+                {
+                    joeSmith
+                },
+                NextActionDate = DateTime.Now.AddMonths(1)
+            };
+            context.Tasks.Add(fifthdTask);
+
+            TaskProject sixthTask = new TaskProject
+            {
+                CreatedDate = DateTime.Now.AddDays(-6),
+                RequiredByDate = DateTime.Now.AddDays(40),
+                Description = "Write author object delete the query.",
+                Status = TaskStatus.Assigned,
+                Type = TaskType.Development,
+                Users = new List<User>
+                {
+                    davidWeb
+                },
+                NextActionDate = DateTime.Now.AddMonths(1)
+            };
+            context.Tasks.Add(sixthTask);
+
+            TaskProject sevenTask = new TaskProject
+            {
+                CreatedDate = DateTime.Now.AddDays(-7),
+                RequiredByDate = DateTime.Now.AddDays(40),
+                Description = "Some other Task.",
+                Status = TaskStatus.Assigned,
+                Type = TaskType.Catering,
+                Users = new List<User>
+                {
+                    michaelJohnson
+                },
+                NextActionDate = DateTime.Now.AddMonths(1)
+            };
+            context.Tasks.Add(sevenTask);
 
             context.SaveChanges();
         }
