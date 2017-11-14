@@ -25,6 +25,7 @@
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li>@Html.ActionLink("All Tasks", "List", "Tasks")</li>
+                        <li>@Html.ActionLink("Create Task", "Create", "Tasks")</li>
                     }                    
                 </ul>
                 @Html.Partial("_LoginPartial")

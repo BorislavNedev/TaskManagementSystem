@@ -1,0 +1,26 @@
+﻿@model  TaskManagementSystem.Web.Models.TaskDetailsViewModel
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2 style="text-align:center">Details</h2>
+<h3>Description: @Model.Description</h3>
+<br />
+<div class="row">
+    <div class="col-md-4">
+        <div><strong>Date Created: </strong>@Model.CreatedDate</div>
+        <br />
+    </div>
+    <div class="col-md-4">
+        <div><strong>Task Status: </strong>@Model.Status</div>
+        <br />
+        <div><strong>Task Type: </strong>@Model.Type</div>
+    </div>
+    <div class="col-md-4">
+        <div><strong>Required By: </strong>@Model.RequiredByDate</div>
+        <br />
+        <div><strong>Next Action: </strong>@Model.NextActionDate</div>
+    </div>
+</div>
+<div>@Html.ActionLink("Change", "Edit", new { id = Model.Id })</div>
+<div>@Html.ActionLink("Delete", "Delete", new { id = Model.Id })</div>

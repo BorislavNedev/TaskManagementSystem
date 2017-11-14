@@ -1,12 +1,98 @@
 ﻿namespace TaskManagementSystem.Web.Controllers
 {
+    using Microsoft.AspNet.Identity;
+    using System.Data.Entity;
     using System.Linq;
+    using System.Net;
     using System.Web.Mvc;
+    using TaskManagementSystem.Data;
+    using TaskManagementSystem.Models;
     using TaskManagementSystem.Web.Models;
 
+    [Authorize]
     public class TasksController : BaseController
     {
-        [Authorize]
+        private TaskManagementSystemDbContext db = new TaskManagementSystemDbContext();
+        
+        public ActionResult Create()
+        {
+            return View();
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "Id,CreatedDate,RequiredByDate,Description,Status,Type,NextActionDate")] TaskProject taskProject)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Tasks.Add(taskProject);
+                db.SaveChanges();
+                return RedirectToAction("List");
+            }
+
+            return View(taskProject);
+        }
+        
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            TaskProject taskProject = db.Tasks.Find(id);
+            if (taskProject == null)
+            {
+                return HttpNotFound();
+            }
+            return View(taskProject);
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "Id,CreatedDate,RequiredByDate,Description,Status,Type,NextActionDate")] TaskProject taskProject)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(taskProject).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("List");
+            }
+            return View(taskProject);
+        }
+        
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            TaskProject taskProject = db.Tasks.Find(id);
+            if (taskProject == null)
+            {
+                return HttpNotFound();
+            }
+            return View(taskProject);
+        }
+        
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            TaskProject taskProject = db.Tasks.Find(id);
+            db.Tasks.Remove(taskProject);
+            db.SaveChanges();
+            return RedirectToAction("List");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+        
         public ActionResult List()
         {
             var tasks = this.Data.Tasks
@@ -24,6 +110,33 @@
             return View(tasks);
         }
 
-        
+        public ActionResult Details(int id)
+        {
+            var userId = User.Identity.GetUserId();
+
+            var task = this.Data.Tasks
+                .All()
+                .Where(x => x.Id == id)
+                .Select(x => new TaskDetailsViewModel
+                {
+                    Id = x.Id,
+                    CreatedDate = x.CreatedDate,
+                    RequiredByDate = x.RequiredByDate,
+                    Description = x.Description,
+                    Status = x.Status,
+                    Type = x.Type,
+                    NextActionDate = x.NextActionDate,
+                    Comments = x.Comments.Select(y => new CommentViewModel
+                    {
+                        DateAdded = y.DateAdded,
+                        Content = y.Content,
+                        Type = y.Type,
+                        ReminderDate = y.ReminderDate,
+                        AuthorUsername = y.User.UserName
+                    })
+                }).FirstOrDefault();
+
+            return View(task);
+        }
     }
 }

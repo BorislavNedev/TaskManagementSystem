@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using TaskManagementSystem.Models;
 
-    public class TaskViewModel
+    public class TaskDetailsViewModel
     {
         public int Id { get; set; }
         
@@ -19,9 +19,9 @@
         public TaskType Type { get; set; }
         
         public IEnumerable<User> Users { get; set; }
-        
+
         public DateTime NextActionDate { get; set; }
-        
-        
+
+        public IEnumerable<CommentViewModel> Comments { get; set; }
     }
 }

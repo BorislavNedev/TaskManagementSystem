@@ -3,15 +3,15 @@
     ViewBag.Title = "Home Page";
 }
 
-<h1 style="text-align:center; color:#333333">Task Management System</h1>
+<h1 style="text-align:center;">Task Management System</h1>
 <br />
 
 <div class="row">
     @for (int i = 0; i < 6; i++)
     {
         var task = Model.ElementAt(i);
-        <a href="@Url.Action("Details", "Tasks", new { task.Id })" style="color:#333333; ">
-            <div class="col-md-6" style="border:1px solid #333333; border-radius:20px;">
+        <a href="@Url.Action("Details", "Tasks", new { task.Id })" style="color:inherit; ">
+            <div class="col-md-6" style="border:1px solid black; border-radius:20px;">
                 <div class="col-md-3">
                     <div><strong>Created Date:</strong></div>
                     <div>@task.CreatedDate</div>
