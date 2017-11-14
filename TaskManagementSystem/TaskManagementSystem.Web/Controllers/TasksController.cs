@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using TaskManagementSystem.Web.Models;
-
-namespace TaskManagementSystem.Web.Controllers
+﻿namespace TaskManagementSystem.Web.Controllers
 {
-    public class HomeController : BaseController
+    using System.Linq;
+    using System.Web.Mvc;
+    using TaskManagementSystem.Web.Models;
+
+    public class TasksController : BaseController
     {
-        public ActionResult Index()
+        [Authorize]
+        public ActionResult List()
         {
-            var listOfTasks = this.Data.Tasks
+            var tasks = this.Data.Tasks
                 .All()
                 .OrderByDescending(x => x.CreatedDate)
-                .Take(6)
                 .Select(x => new TaskConciseViewModel
                 {
                     Id = x.Id,
@@ -24,8 +21,9 @@ namespace TaskManagementSystem.Web.Controllers
                     Type = x.Type
                 });
 
-            return View(listOfTasks);
+            return View(tasks);
         }
+
         
     }
 }

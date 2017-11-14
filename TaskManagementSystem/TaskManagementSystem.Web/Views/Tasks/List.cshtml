@@ -1,0 +1,33 @@
+﻿@model IEnumerable<TaskManagementSystem.Web.Models.TaskConciseViewModel>
+@{
+    ViewBag.Title = "List";
+}
+
+<h1 style="text-align:center;">All Tasks</h1>
+<br />
+
+@foreach (var task in Model)
+{
+    <a href="@Url.Action("Details", "Tasks", new { task.Id })" style="color:inherit;">
+        <div class="row" style="border:1px solid black; border-radius:20px;">
+            <div class="col-md-2">
+                <div><strong>Created Date:</strong></div>
+                <div>@task.CreatedDate</div>
+            </div>
+            <div class="col-md-6">
+                <div><strong>Description:</strong></div>
+                <div>@task.Description</div>
+            </div>
+            <div class="col-md-2">
+                <div><strong>Type:</strong></div>
+                <div>@task.Type</div>
+            </div>
+            <div class="col-md-2">
+                <div><strong>Required by:</strong></div>
+                <div>@task.RequiredByDate</div>
+            </div>
+        </div>
+    </a>
+    <br />
+}
+

@@ -4,7 +4,7 @@
     using System.ComponentModel.DataAnnotations;
     using TaskManagementSystem.Models;
 
-    public class HomePageViewModel
+    public class TaskConciseViewModel
     {
         public int Id { get; set; }
 

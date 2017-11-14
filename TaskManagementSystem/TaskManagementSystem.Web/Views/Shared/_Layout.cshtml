@@ -22,6 +22,10 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("All Tasks", "List", "Tasks")</li>
+                    }                    
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -30,7 +34,7 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
+        <footer style="text-align: center; bottom:0;">
             <p>&copy; @DateTime.Now.Year - Task Management System</p>
         </footer>
     </div>

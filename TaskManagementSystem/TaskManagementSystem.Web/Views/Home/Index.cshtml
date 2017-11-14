@@ -1,30 +1,30 @@
-﻿@model IEnumerable<TaskManagementSystem.Web.Models.HomePageViewModel>
+﻿@model IEnumerable<TaskManagementSystem.Web.Models.TaskConciseViewModel>
 @{
     ViewBag.Title = "Home Page";
 }
 
-<h1 style="text-align:center">Task Management System</h1>
+<h1 style="text-align:center; color:#333333">Task Management System</h1>
 <br />
 
 <div class="row">
     @for (int i = 0; i < 6; i++)
     {
         var task = Model.ElementAt(i);
-        <a href="@Url.Action("Details", "Tasks", new { task.Id })" style="color:inherit;">
-            <div class="col-md-6" style="border:1px solid black; border-radius:20px; padding:10px">
-                <div class="col-md-2">
+        <a href="@Url.Action("Details", "Tasks", new { task.Id })" style="color:#333333; ">
+            <div class="col-md-6" style="border:1px solid #333333; border-radius:20px;">
+                <div class="col-md-3">
                     <div><strong>Created Date:</strong></div>
                     <div>@task.CreatedDate</div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <div><strong>Description:</strong></div>
                     <div>@task.Description</div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <div><strong>Type:</strong></div>
                     <div>@task.Type</div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <div><strong>Required by:</strong></div>
                     <div>@task.RequiredByDate</div>
                 </div>
