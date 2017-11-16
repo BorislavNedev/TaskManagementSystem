@@ -138,5 +138,34 @@
 
             return View(task);
         }
+
+        [ValidateAntiForgeryToken]
+        public ActionResult PostComment(SubmitCommentModel commentModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var username = this.User.Identity.GetUserName();
+                var userId = this.User.Identity.GetUserId();
+
+                this.Data.Comments.Add(new Comment()
+                {
+                    UserId = userId,
+                    DateAdded = commentModel.DateAdded,
+                    Content = commentModel.Comment,
+                    ReminderDate = commentModel.ReminderDate,
+                    Type = commentModel.Type,
+                    TaskProjectId = commentModel.TaskId
+                });
+
+                this.Data.SaveChanges();
+
+                var viewModel = new CommentViewModel { AuthorUsername = username, Content = commentModel.Comment };
+                return View(viewModel);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, ModelState.Values.First().ToString());
+            }
+        }
     }
 }

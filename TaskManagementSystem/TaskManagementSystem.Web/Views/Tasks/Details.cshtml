@@ -22,5 +22,52 @@
         <div><strong>Next Action: </strong>@Model.NextActionDate</div>
     </div>
 </div>
-<div>@Html.ActionLink("Change", "Edit", new { id = Model.Id })</div>
-<div>@Html.ActionLink("Delete", "Delete", new { id = Model.Id })</div>
+<br />
+<div style="text-align:center">
+    <span style="color:black">@Html.ActionLink("Change", "Edit", new { id = Model.Id }, new { @style = "color:black;" })</span>
+    <span style="color:black">@Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { @style = "color:black;" })</span>
+</div>
+
+<br />
+<h3>Comments:</h3>
+<br />
+<div>
+    @foreach (var comment in Model.Comments)
+    {
+        <div class="row" style="border:1px solid black; border-radius:10px;">
+            <div class="col-md-2">
+                <div><strong>Date:</strong></div>
+                <div>@comment.DateAdded</div>
+            </div>
+            <div class="col-md-6">
+                <div><strong>@comment.AuthorUsername:</strong></div>
+                <div>@comment.Content</div>
+            </div>
+            <div class="col-md-2">
+                <div><strong>Type:</strong></div>
+                <div>@comment.Type</div>
+            </div>
+            <div class="col-md-2">
+                <div><strong>Reminder date:</strong></div>
+                <div>@comment.ReminderDate</div>
+            </div>            
+        </div>
+        <br />
+    }
+</div>
+
+@if (User.Identity.IsAuthenticated)
+{
+    using (Ajax.BeginForm("PostComment", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = "Comments" }))
+    {
+        @Html.Hidden("TaskId", Model.Id)
+        @Html.TextArea("comment")
+        @Html.AntiForgeryToken()
+        <br />
+        <input type="submit" value="Submit comment" />
+    }
+}
+
+@section scripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+}
